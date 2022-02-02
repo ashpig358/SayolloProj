@@ -1,0 +1,45 @@
+#AD Statistical Server
+
+A web server that provides a basic HTTP api for querying the the ad's information
+ 
+## Getting started 
+
+run the command docker build -t {name of image} .
+it will create docker image with all required dependency
+to fastapi and firebase. 
+
+DB - FireBase key-value store with 2 Collections (Tables)
+
+    1. Collection name users
+        1.1  column numOfAdReq (count the ad request per user)
+        1.2  column numOfImpReq (count the Impression per user)
+        1.3  column name (key in collection represent user)
+        
+    2. Collection name SdkVersion 
+        2.1  column numOfAdReq (count the ad request per SdkVersion)
+        2.2  column numOfImpReq (count the Impression per SdkVersion)
+        2.3  column sdkVer (key in collection represent SdkVersion)
+
+run the image from docker container 
+The server will now be running on an available port (defaulting to 8000) and
+will restart on changes to the src files.
+ 
+open url localhost:8000
+    there is 3 available endpoints:
+        
+        1. localhost:8000/getAd/{sdkVersion}/{sessionId}/{platForm}/{usrName}/{countryCode}/
+        1.1 getAd return response as xml from https://6u3td6zfza.execute-api.us-east-2.amazonaws.com/prod/ad/vast  
+        
+        2. localhost:8000/getImpression/{sdkVer}/{sessionId}/{platForm}/{usrName}/{countryCode}/
+        2.1 getImpression return answer 200
+        
+        3. localhost:8000/getStats/{filterType}/
+        3.1 return calculation of rate (= Impressions/Ad requests) User/SDKVersion as JSON
+        
+        
+Most of the code is boilerplate; the logic for the `/app` endpoint can be
+found in [src/app.py](src/app.py)     
+    
+       
+        
+
